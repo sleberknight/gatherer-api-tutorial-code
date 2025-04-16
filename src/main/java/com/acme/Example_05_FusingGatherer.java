@@ -18,9 +18,9 @@ public class Example_05_FusingGatherer {
         Gatherer.Integrator<Void, E, RR> integrator = (_, element, downstream) -> {
             var mapped = mapper.apply(element);
             if (filter.test(mapped)) {
-                flatMapper.apply(mapped).forEach(downstream::push);
+                flatMapper.apply(mapped).forEach(downstream::push);  // Still has bugs from Example 4 (see article)
             }
-            return true;
+            return true;  // not correct...see article
         };
         Gatherer<E, ?, RR> gatherer = Gatherer.of(integrator);
         return gatherer;
