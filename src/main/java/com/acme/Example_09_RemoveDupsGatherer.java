@@ -13,7 +13,7 @@ public class Example_09_RemoveDupsGatherer {
             if (set.add(element)) {
                 downstream.push(element);
             }
-            return true; // this is not the right thing to do even though it works here...see article
+            return true;
         };
         Gatherer<E, ?, E> gatherer = Gatherer.ofSequential(initializer, integrator);
         return gatherer;
