@@ -11,7 +11,7 @@ import java.util.function.Supplier;
 import java.util.stream.Gatherer;
 import java.util.stream.Stream;
 
-public class Example_12_SortingDistinctGatherer {
+public class Example_12_SortingDistinctGatherer_2 {
 
     static <E> Gatherer<E, ?, E> sort(Comparator<E> comparator) {
         
@@ -21,20 +21,13 @@ public class Example_12_SortingDistinctGatherer {
             set.add(element);
             return true;
         };
-        
-        // The takeWhile is needed to avoid pushing elements that downstrean does not
-        // want, for example when using a limit or findFirst.
-        BiConsumer<SequencedSet<E>, Gatherer.Downstream<? super E>> finisher = 
-                (set, downstream) -> set.stream()
-                        .takeWhile(_ -> !downstream.isRejecting())
-                        .forEach(downstream::push);
 
-        // Instead of the takeWhile above, you can also do this:
-        //
-        // set.stream()
-        //     .allMatch(downstream::push);
-        //
-        // This is because allMatch short-circuits on the first false value.
+        BiConsumer<SequencedSet<E>, Gatherer.Downstream<? super E>> finisher = (set, downstream) -> {
+            // Check if the downstream is rejecting before doing any work
+            if (!downstream.isRejecting()) {
+                set.stream().allMatch(downstream::push);
+            }
+        };
         
         Gatherer<E, SequencedSet<E>, E> gatherer = 
                 Gatherer.ofSequential(initializer, integrator, finisher);
