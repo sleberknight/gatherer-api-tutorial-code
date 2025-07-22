@@ -22,7 +22,7 @@ public class Example_06_FusingGatherer_Fixed {
                 try (var flatMapped = flatMapper.apply(mapped)) {
                     // Add sequential() to protect against parallel streams and
                     // avoid NPEs by checking for null values.
-                    return flatMapped == null || flatMapped.allMatch(downstream::push);  
+                    return flatMapped == null || flatMapped.sequential().allMatch(downstream::push);  
                 }
             }
             return true;
