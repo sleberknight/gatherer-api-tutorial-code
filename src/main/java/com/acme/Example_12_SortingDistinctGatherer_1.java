@@ -17,7 +17,8 @@ public class Example_12_SortingDistinctGatherer_1 {
         
         Supplier<SequencedSet<E>> initializer = () -> new TreeSet<>(comparator);
         
-        Gatherer.Integrator<SequencedSet<E>, E, E> integrator = (set, element, _) -> {
+        @SuppressWarnings("unused")
+        Gatherer.Integrator<SequencedSet<E>, E, E> integrator = (set, element, downstream) -> {
             set.add(element);
             return true;
         };
