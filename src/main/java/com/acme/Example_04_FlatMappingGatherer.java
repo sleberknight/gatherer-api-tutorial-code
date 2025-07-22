@@ -17,9 +17,9 @@ public class Example_04_FlatMappingGatherer {
 
     public static void main(String[] args) {
         Function<String, Stream<String>> flatMapper = s -> s.chars().mapToObj(Character::toString);
-        Gatherer<String, ?, String> mappingGatherer = flatMapping(flatMapper);
+        Gatherer<String, ?, String> flatMappingGatherer = flatMapping(flatMapper);
         var result = Stream.of("one", "two", "three")
-                .gather(mappingGatherer)
+                .gather(flatMappingGatherer)
                 .toList();
         System.out.println("result = " + result);
     }
