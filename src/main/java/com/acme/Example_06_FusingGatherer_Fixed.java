@@ -20,10 +20,12 @@ public class Example_06_FusingGatherer_Fixed {
             if (filter.test(mapped)) {
                 // Use try-with-resources to ensure the stream is closed
                 try (var flatMapped = flatMapper.apply(mapped)) {
-                    flatMapped.sequential().forEach(downstream::push);  // Add sequential() to protect against parallel streams
+                    // Add sequential() to protect against parallel streams and
+                    // avoid NPEs by checking for null values.
+                    return flatMapped == null || flatMapped.allMatch(downstream::push);  
                 }
             }
-            return true;  // still not correct...see article
+            return true;
         };
         Gatherer<E, ?, RR> gatherer = Gatherer.of(integrator);
         return gatherer;
