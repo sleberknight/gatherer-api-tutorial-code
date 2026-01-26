@@ -21,7 +21,7 @@
     <properties>
         <!-- dependency versions -->
         <kiwi.version>5.0.0</kiwi.version>
-        <kiwi-bom.version>3.0.0</kiwi-bom.version>
+        <kiwi-bom.version>3.0.1</kiwi-bom.version>
 
         <!-- test dependency versions -->
         <kiwi-test.version>4.0.0</kiwi-test.version>
